@@ -24,16 +24,17 @@ export default function RaffleCard({ raffle }: RaffleCardInterface) {
     const history = useNavigate()
     const goToRafflePage = () => {
         setRaffleId(raffle.id)
-        history(`/home/shop/${raffle.name.split(' ').join('-').toLocaleLowerCase()}`)
+        history(`/home/shop/${raffle.title.split(' ').join('-').toLocaleLowerCase()}`)
     }
  
     return (
         <Flex direction={'column'} textAlign='left' w={'18rem'} className='raffle-card' position='relative'
              >
-            <Text cursor='pointer' onClick={() => goToRafflePage()}  fontSize='2rem' fontWeight='bold' textOverflow={'ellipsis'} textAlign='center'>{raffle.name}</Text>
+            <Text cursor='pointer' onClick={() => goToRafflePage()}  fontSize='2rem' fontWeight='bold' textOverflow={'ellipsis'}
+             textAlign='center'>{raffle.title}</Text>
             <Text cursor='pointer' fontSize='1rem' mb='0.5rem'
-                fontWeight='regular'>DISPONÍVEIS: {Number(raffle.total) - Number(raffle.sold)}</Text>
-            <Image w={'100%'} height='19rem' src={raffle.image_link} />
+                fontWeight='regular'>DISPONÍVEIS: {Number(raffle.free)}</Text>
+            <Image w={'100%'} height='19rem' src={raffle.imageUrl} />
             <Box padding='1rem 0 2rem 1rem' gap='0.5rem' overflow='hidden'>
                 <Text fontSize='2.5rem' fontWeight='bold'>{formatCurrency(raffle.price)}</Text>
             </Box>

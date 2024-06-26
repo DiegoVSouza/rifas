@@ -2,22 +2,25 @@ import { User } from "./User";
 
 export interface Raffle {
   id: string;
-  name: string;
-  image_link: string;
+  title: string;
+  imageUrl: string;
   city: string;
   price: number;
   total: number;
-  sold: number;
-  date_time: Date;
+  free: number;
+  date: Date;
   numbers: Numbers[]
   winners?: User[];
+  regulation: string;
+  description: string;
 }
 
 export interface Numbers {
+  id: string;
   number: number;
-  token: string;
-  sold: boolean;
-  client?: User;
+  free: boolean;
+  userId?: string;
+  user?: User;
 }
 
 export interface RafflePag {
@@ -38,19 +41,25 @@ export interface RaffleGet {
 }
 
 export interface RafflePost {
-  name: string;
+  title: string;
+  imageUrl: string;
   city: string;
   price: number;
   total: number;
-  sold: number;
+  date: Date;
+  regulation: string;
 }
 
 export interface RafflePut {
   id: string;
-  name?: string;
+  title?: string;
+  imageUrl?: string;
   city?: string;
   price?: number;
   total?: number;
-  sold?: number;
+  date?: Date;
+  numbers?: Numbers[]
+  winners?: User[];
+  regulation?: string;
 }
 

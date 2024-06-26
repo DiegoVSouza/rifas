@@ -12,7 +12,7 @@ export default function RaffleComponent({ raffle }: RaffleComponentInterface) {
   const calculeNumbers = () => {
     let numbers: Numbers[] = []
     for (var i = 1; i <= raffle.total; i++) {
-      numbers.push({ number: i, sold: false, token: '' })
+      numbers.push({ number: i, free: true, id: '' })
     }
 
     if (raffle.numbers) {
@@ -31,7 +31,7 @@ export default function RaffleComponent({ raffle }: RaffleComponentInterface) {
     let numbers = calculeNumbers()
     let boxes: JSX.Element[] = [];
     numbers.map(item => boxes.push(
-      <Box className={item.sold ? 'number-select sold' :
+      <Box className={!item.free ? 'number-select sold' :
         selectedNumbers.find(i => i === item.number) ? 'number-select selected' : 'number-select'} >
         {item.number}
       </Box>))
@@ -42,9 +42,9 @@ export default function RaffleComponent({ raffle }: RaffleComponentInterface) {
   return (
     <Box id="raffle" as='section' mb='5.6rem'>
       <Text fontSize='1.5rem' padding={['2rem 1rem', '2rem 2rem', '2rem 2rem', '2rem 3.5rem', '2rem 3.5rem']}
-        fontWeight='bold' color='white'>{raffle.name}</Text>
-      <CountdownTimer targetDate={String(raffle.date_time)} />
-      <Image src={raffle.image_link} w='100%' height='17rem' objectFit='cover' />
+        fontWeight='bold' color='white'>{raffle.title}</Text>
+      <CountdownTimer targetDate={String(raffle.date)} />
+      <Image src={raffle.imageUrl} w='100%' height='17rem' objectFit='cover' />
       <Text fontSize='3rem' padding={['1rem 1rem', '2rem 2rem', '2rem 2rem', '2rem 3.5rem', '2rem 3.5rem']}
         fontWeight='bold' color='red'>R${raffle.price}</Text>
       <Text fontSize='1.2rem' padding={['1rem 1rem', '2rem 2rem', '2rem 2rem', '2rem 3.5rem', '2rem 3.5rem']}

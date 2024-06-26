@@ -3,7 +3,18 @@ export interface User {
   name: string
   cpf: string
   phone: number
-  image_link: string;
+  city?: string
+  email?: string
+  password?: string
+  roleId?: string;
+  role?: Role;
+  imageUrl: string;
+}
+
+interface Role{
+  id: string;
+  value: string;
+  label: string;
 }
 
 
@@ -11,7 +22,7 @@ export interface UserPost {
   name: string
   cpf: string
   phone: number
-  image_link: string;
+  imageUrl: string;
 }
 
 export interface UserPut {
@@ -19,6 +30,6 @@ export interface UserPut {
   name?: string
   cpf?: string
   phone?: number
-  image_link?: string;
+  imageUrl?: string;
 }
 
