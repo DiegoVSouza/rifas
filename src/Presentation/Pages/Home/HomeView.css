@@ -1,0 +1,22 @@
+
+
+/* Voltar pra deixar a imagem mais em cima !!!!!!!*/
+.home-image{
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+}
+
+.text-box{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    border-radius: 10px 10px 0 0;
+    text-align: center;
+}
+
+#overlay-home{
+    background: var(--primary);
+    opacity: 0.8;
+}

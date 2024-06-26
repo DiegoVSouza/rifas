@@ -1,0 +1,43 @@
+#pagFooter{
+    width: 100%;
+    background-color: white;
+    padding: 2rem 1.5rem;
+    background: var(--secundary);
+}
+
+.footer-links p{
+    cursor: pointer;
+    color: white;
+    font-weight: 500;
+}
+
+.footer-social{
+    justify-content: space-between;
+}
+
+.footer-social > div{
+    width: 3rem;
+    height: 3rem;
+    border-radius: 100%;
+    padding: 0.5rem;
+    background: var(--primary);
+}
+
+.footer-social svg{
+    width: 100%;
+    height: 100%;
+    color: white;
+}
+
+#newsletter-button{
+    cursor: pointer;
+    padding-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    /* text-decoration: underline; */
+    /* line-height: 2rem; */
+}
+
+
+hr{
+    background-color: black;
+}

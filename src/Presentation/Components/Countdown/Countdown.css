@@ -1,0 +1,14 @@
+#countdown{
+    justify-content: center;
+}
+.timer{
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.timer > p{
+    color: white;
+    border-bottom: solid 2px white;
+    font-size: 2rem;
+    padding-bottom: 1rem;
+}

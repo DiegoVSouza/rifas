@@ -1,0 +1,29 @@
+#quantity-button{
+    justify-content: center;
+    align-items: center;
+    border: solid 1px var(--gray-03);
+    border-radius: 10px;
+}
+
+#quantity-button button{
+    border-radius: 10px;
+    height: 4rem ;
+}
+
+
+
+.add-button{
+    background: white !important;
+    border: solid 1px black;
+    width: 13.5rem;
+    transition: background 200ms ease-in-out;
+    height: 4rem !important;
+
+}
+
+.add-button:hover{
+    background: var(--secundary) !important;
+    border: none;
+    color: white !important;
+    width: 13.5rem;
+}

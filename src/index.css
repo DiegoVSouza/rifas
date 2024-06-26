@@ -1,0 +1,66 @@
+:root {
+  --primary: #0F0232;
+  --secundary: #463198;
+  --pink: #ec1379;
+  --red: #FF1B1B;
+  --blue: #073D54;
+  --yellow: #DD990F;
+  --green-01: #2ec1ac;
+  --gray-01: #898989;
+  --gray-02: #F4F5F7;
+  --gray-03: #9F9F9F;
+  --gray-04: #D9D9D9;
+  --black-01: #242424;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif !important;
+  /* background: rgb(127, 3, 127);
+  background: linear-gradient(0deg, rgba(127, 3, 127, 1) 0%, rgba(43, 0, 39, 1) 100%); */
+  scroll-behavior: smooth;
+}
+
+main{
+  /* padding: 1rem 2rem; */
+  min-height: calc(100vh - 7rem)
+}
+
+/* @media only screen and (max-width: 600px) {
+  main {
+    padding: 0.5rem 1rem; 
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 900px) {
+  main {
+    padding: 0.75rem 1.5rem; 
+  }
+} */
+
+.primary{
+  color: white !important;
+  background: var(--primary) !important;
+}
+
+.secundary{
+  color: white !important;
+  background: var(--secundary) !important;
+}
+
+.text-feature{
+  font-size: 1rem;
+  color: var(--secundary);
+}
+
+.text-secundary{
+  font-size: 1rem;
+  color: var(--gray-03);
+}
+
+.text-yellow{
+  color: var(--yellow);
+}

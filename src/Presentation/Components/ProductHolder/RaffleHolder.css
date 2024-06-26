@@ -1,0 +1,41 @@
+#filter-menu {
+    color: black;
+    background-color: var(--primary);
+}
+
+#filter-menu div > * {
+    cursor: pointer;
+}
+
+#number-resume{
+    border-left: solid 2px #9F9F9F;
+    padding-left: 2rem;
+}
+
+#filter{
+    transition: scale 200ms ease-in-out, color 200ms ease-in-out;
+}
+
+#filter:hover{
+    scale: 1.1;
+    color: var(--secundary);
+}
+
+#raffle-no-pagination {
+    position: relative;
+    background: var(--primary);
+}
+
+#raffle-no-pagination > img{
+    z-index: 1 ;
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+    opacity: 0.2;
+    position: absolute;
+}
+
+#raffle-no-pagination  *{
+    z-index: 5;
+
+}

@@ -1,0 +1,19 @@
+#title-info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#is-product{
+    background-color: var(--primary);
+}
+
+.back-history{
+    color: var(--gray-03);
+}
+.current-history{
+    color: black;
+    border-left: solid 2px var(--gray-03);
+    padding-left: 1.5rem;
+}

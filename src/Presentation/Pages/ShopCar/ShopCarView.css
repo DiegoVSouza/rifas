@@ -1,0 +1,12 @@
+.especifications{
+    background-color: var(--primary);
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    font-weight: bold;
+}
+
+.shopcar-card{
+    border-bottom: solid 2px var(--gray-03);
+    padding-bottom: 1.8rem;
+    margin-bottom: 1.8rem;
+}

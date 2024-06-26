@@ -1,0 +1,180 @@
+// import { renderHook, act, WaitForNextUpdate } from '@testing-library/react-hooks';
+// import UserModel from '../../main/hooks/UserModel';
+// import * as GetUsersModule from '../../Domain/UseCase/User/GetUsers';
+// import * as PostUsersModule from '../../Domain/UseCase/User/PostUsers';
+// import * as PutUsersModule from '../../Domain/UseCase/User/PutUsers';
+// import * as DeleteUsersModule from '../../Domain/UseCase/User/DeleteUsers';
+// import { UserPost, UserPut } from '../../Domain/Model/User';
+
+// let UsersData = [
+//     {
+//         id: '1',
+//         email: "01@mail.com",
+//         cpf: "12345678910",
+//         name: "Jose",
+//         sex: 'Feminino',
+//         cep: "12345-123",
+//         phone: "(88) 9876-4145",
+//         password: "password 01",
+//         data_de_nascimento: '01/01/2001',
+//     },
+//     {
+//         id: '2',
+//         email: "02@mail.com",
+//         cpf: "12345678911",
+//         name: "Jose",
+//         sex: 'Feminino',
+//         cep: "12345-134",
+//         phone: "(88) 9876-412",
+//         password: "password 02",
+//         data_de_nascimento: '01/01/2001',
+//     }
+// ];
+
+// jest.mock('../../Domain/UseCase/User/GetUsers', () => ({
+//     GetUsers: jest.fn().mockImplementation(() => ({
+//         invoke: async () => UsersData
+//     })),
+// }));
+
+// jest.mock('../../Domain/UseCase/User/PostUsers', () => ({
+//     PostUsers: jest.fn().mockImplementation(() => ({
+//         invoke: async (data: UserPost) => {
+//             const newUser = {
+//                 id: '3',
+//                 email: "123@mail.com",
+//                 cpf: "3333333333",
+//                 name: "Jose",
+//                 sex: 'Feminino',
+//                 cep: "12345-242",
+//                 phone: "(88) 9876-4124",
+//                 password: "password 123",
+//                 data_de_nascimento: '01/01/2001',
+//             }
+
+//             UsersData.push(newUser);
+//             return newUser;
+//         }
+//     })),
+// }));
+
+// jest.mock('../../Domain/UseCase/User/PutUsers', () => ({
+//     PutUsers: jest.fn().mockImplementation(() => ({
+//         invoke: async (data: UserPut) => {
+//             const editUser = UsersData.find(item => item.id === data.id);
+//             if (editUser) {
+//                 if (data.name) editUser.name = data.name;
+//                 if (data.cep) editUser.cep = data.cep;
+//                 if (data.email) editUser.email = data.email;
+//                 if (data.phone) editUser.phone = data.phone;
+//                 if (data.cpf) editUser.cpf = data.cpf;
+//                 if (data.phone) editUser.phone = data.phone;
+//                 if (data.phone) editUser.phone = data.phone;
+//                 if (data.password) editUser.password = data.password;
+//             }
+//             return editUser;
+//         }
+//     })),
+// }));
+
+// jest.mock('../../Domain/UseCase/User/DeleteUsers', () => ({
+//     DeleteUsers: jest.fn().mockImplementation(() => ({
+//         invoke: async (id: string) => {
+//             const deleteUser = UsersData.find(item => item.id === id);
+//             UsersData = UsersData.filter(item => item.id !== id);
+//             return deleteUser;
+//         }
+//     })),
+// }));
+
+// let userModel: ReturnType<typeof UserModel>;
+// let wait: WaitForNextUpdate;
+
+// beforeAll(() => {
+//     const { result, waitForNextUpdate } = renderHook(() => UserModel());
+//     userModel = result.current;
+//     wait = waitForNextUpdate
+// });
+
+// describe('userModel', () => {
+//     it('deve buscar os Useristradores corretamente', async () => {
+//         const getUsersSpy = jest.spyOn(GetUsersModule, 'GetUsers');
+//         await act(async () => {
+//             await userModel.getUsers()
+//         });
+//         wait().then(() => {
+//             expect(getUsersSpy).toHaveBeenCalled();
+//             expect(userModel.Users).toHaveLength(2);
+//             expect(userModel.Users[0].id).toBe('1');
+//             expect(userModel.Users[1].id).toBe('2');
+//         })
+
+//     });
+
+//     it('deve alterar o User selecionado corretamente', () => {
+//         const onChangeValueSpy = jest.spyOn(userModel, 'onChangeValue');
+//         act(() => {
+//             userModel.onChangeValue('1');
+//         });
+//         wait().then(() => {
+//             expect(onChangeValueSpy).toHaveBeenCalledWith('1');
+//             expect(userModel.User).toBeDefined();
+//             expect(userModel.User!.id).toBe('1');
+//         })
+//     });
+
+//     it('deve adicionar um novo User corretamente', async () => {
+//         const postUsersSpy = jest.spyOn(PostUsersModule, 'PostUsers');
+//         await act(async () => {
+//             await userModel.postUsers({
+//                 email: "any@mail.com",
+//                 cpf: "11111111111",
+//                 name: "Jose",
+//                 sex: 'Feminino',
+//                 cep: "12345-678",
+//                 phone: "(88) 9876-1111",
+//                 password: "password",
+//                 data_de_nascimento: '01/01/2000',
+//             });
+//         });
+//         wait().then(() => {
+//             expect(postUsersSpy).toHaveBeenCalled();
+//             expect(userModel.Users).toHaveLength(3);
+//         })
+//     });
+
+//     it('deve atualizar um User corretamente', async () => {
+//         const putUsersSpy = jest.spyOn(PutUsersModule, 'PutUsers');
+//         const editUser = {
+//             id: "3",
+//             email: "any@mail.com 2",
+//             cpf: "22222222222",
+//             name: "Jose",
+//             sex: 'Feminino',
+//             cep: "12345-699",
+//             phone: "(88) 9876-5433",
+//             password: "password 2",
+//             data_de_nascimento: '02/02/2000',
+//         };
+
+//         await act(async () => {
+//             await userModel.putUsers(editUser);
+//         });
+//         wait().then(() => {
+//             expect(putUsersSpy).toHaveBeenCalled();
+//             expect(userModel.User).toBe(userModel.Users.find(item => item.id === editUser.id));
+//         })
+//     });
+
+//     it('deve deletar um User corretamente', async () => {
+//         const deleteUsersSpy = jest.spyOn(DeleteUsersModule, 'DeleteUsers');
+//         await act(async () => {
+//             await userModel.deleteUsers('1');
+//         });
+//         wait().then(() => {
+//             expect(deleteUsersSpy).toHaveBeenCalled();
+//             expect(userModel.Users).toHaveLength(1);
+//             expect(userModel.Users[0].id).toBe('2');
+//         })
+//     });
+// });

@@ -1,0 +1,123 @@
+nav {
+    -webkit-box-shadow: 0px 10px 15px -4px rgba(0, 0, 0, 0.40);
+    -moz-box-shadow: 0px 10px 15px -4px rgba(0, 0, 0, 0.40);
+    box-shadow: 0px 10px 15px -4px rgba(0, 0, 0, 0.40);
+    background: var(--primary);
+    margin: 0;
+    height: 6.25rem;
+    padding: 0 6rem 0 3rem;
+    color: white !important;
+}
+
+
+
+ul {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0 2.5rem;
+}
+
+li {
+    list-style: none;
+}
+
+.headerSvg {
+    width: 1.75rem;
+    height: 1.75rem;
+    cursor: pointer;
+}
+
+.headerSvg:hover {
+    color: var(--secundary);
+}
+
+.popover {
+    border: solid 1px var(--secundary) !important;
+}
+
+.popover button {
+    text-align: center;
+    text-decoration: none !important;
+    background: none;
+    color: black !important;
+    padding: 0.5rem 1rem !important;
+}
+
+.popover button:hover {
+    background: var(--gray-02);
+    color: var(--secundary) !important;
+}
+
+#header-ul button {
+    text-align: center;
+    text-decoration: none !important;
+    background: none;
+    color: white !important;
+    padding: 0.5rem 1rem !important;
+}
+
+#header-ul li> button:hover {
+    background: var(--gray-02);
+    color: var(--secundary) !important;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+@media only screen and (max-width: 1280px) {
+    nav {
+        padding: 0 1rem;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    nav {
+        padding: 0;
+    }
+
+    ul {
+        gap: 0 1rem;
+    }
+
+    #header-ul button {
+        padding: 0.5rem !important;
+        font-size: 1rem !important;
+    }
+
+    .headerSvg {
+        width: 1rem;
+        height: 1rem;
+    }
+
+}
+
+@media only screen and (max-width: 768px) {
+
+    .headerSvg {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+
+}
+
+#shop-car-overlay {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    border-radius: 2rem;
+    width: 1rem;
+    height: 1rem;
+    background-color: red;
+    color: white;
+    text-align: center;
+    font-size: 0.75rem;
+
+}

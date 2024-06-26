@@ -1,0 +1,63 @@
+#raffle{
+    background: var(--primary);
+}
+
+.number-select{
+    border-radius: 12px;
+    width: 6rem;
+    height: 6rem;
+    color: black;
+    background: white;
+}
+
+.sold{
+    color: white;
+    background: red;
+}
+
+.selected{
+    color: white;
+    background: var(--secundary);
+}
+
+
+
+#comments p{
+    color: var(--gray-03);
+    font-weight: 400;
+    border-left: solid 1px var(--gray-03);
+    padding-left: 1.3rem;
+}
+
+#button-size{
+    background-color: var(--primary);
+    color: black;
+}
+
+.active-size{
+    background-color: var(--secundary) !important;
+    color: white !important;
+}
+
+
+.active-color{
+    scale: 1.2;
+    border: solid 2px var(--secundary) !important;
+}
+
+#definitions{
+    border-top: solid 1px var(--gray-04);
+}
+
+.icon-container svg{
+    cursor: pointer;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+#tabs-product{
+    color: var(--gray-03);
+    border-top: solid 1px var(--gray-04);
+    padding-top: 2.7rem;
+    margin-top: 4rem;
+}

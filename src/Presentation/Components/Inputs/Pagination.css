@@ -1,0 +1,14 @@
+#pagination button {
+    padding: 1rem;
+    color: black !important;
+    height: 3.75rem;
+    width: 3.75rem;
+    background: var(--primary) !important;
+    border-radius: 10px !important;
+}
+
+#pagination button.activePag{
+    color: white !important;
+    background: var(--secundary) !important;
+}
+

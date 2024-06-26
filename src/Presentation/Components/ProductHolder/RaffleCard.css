@@ -1,0 +1,43 @@
+.raffle-card {
+  background: none;
+  color: white ;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-secundary {
+  color: var(--gray-01);
+}
+
+.overlay {
+  background-color: rgba(58, 58, 58, 0.72);
+}
+
+.stamp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: 500;
+  border-radius: 2rem;
+  width: 3rem;
+  height: 3rem;
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 3;
+}
+
+.discount {
+  background-color: var(--red-01);
+}
+
+.is-new {
+  background-color: var(--green-01);
+}
+
+#list-description {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

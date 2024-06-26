@@ -1,0 +1,37 @@
+#raffle-button-component {
+    position: relative;
+    display: inline-block;
+    border-radius: 1rem !important;
+    transition: background-color 200ms ease-in-out;
+    background-color: var(--blue);
+    color: white !important;
+    overflow: hidden;
+}
+.full{
+    background: var(--red);
+    background: linear-gradient(90deg, rgba(255, 27, 27, 1) 0%, rgba(7, 61, 84, 1) 100%) !important;
+}
+
+
+#raffle-button-component::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, rgba(7, 61, 84, 1) 0%, rgba(255, 27, 27, 1) 100%);
+    transition: opacity 200ms ease-in-out;
+    opacity: 0;
+    z-index: 0;
+}
+
+
+#raffle-button-component:hover::before {
+    opacity: 1;
+}
+
+#raffle-button-component span {
+    position: relative;
+    z-index: 1;
+}

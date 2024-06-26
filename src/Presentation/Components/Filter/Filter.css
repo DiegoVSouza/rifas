@@ -1,0 +1,29 @@
+#filter-menu {
+    color: black;
+    background-color: var(--primary);
+}
+
+#filter-menu div>* {
+    cursor: pointer;
+}
+
+#number-resume {
+    border-left: solid 2px #9F9F9F;
+    padding-left: 2rem;
+}
+
+#icon-holder>div,
+#icon-holder>svg {
+    transition: scale 200ms ease-in-out, color 200ms ease-in-out;
+}
+
+#icon-holder>div:hover,
+#icon-holder>svg:hover {
+    scale: 1.1;
+    color: var(--secundary);
+}
+
+.active-hover {
+    scale: 1.1;
+    color: var(--secundary);
+}
