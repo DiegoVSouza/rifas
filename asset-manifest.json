@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/rifas/home/static/css/main.25326e5c.css",
+    "main.js": "/rifas/home/static/js/main.6de8f2f2.js",
+    "static/media/backgroundRaffle.png": "/rifas/home/static/media/backgroundRaffle.23905c8ab6fc2086c9be.png",
+    "static/media/home.png": "/rifas/home/static/media/home.0a225860eeb57b639253.png",
+    "static/media/fundoFeature.png": "/rifas/home/static/media/fundoFeature.e654c974a49df7d6e597.png",
+    "static/media/logo.svg": "/rifas/home/static/media/logo.18e98e86d7cb29bdad46f1bd0b7dfb20.svg",
+    "static/media/logo.png": "/rifas/home/static/media/logo.370f0cbe885c652cde7c.png",
+    "static/media/award.svg": "/rifas/home/static/media/award.f646f084b4d9be36e6397d7afa491eec.svg",
+    "static/media/payment.svg": "/rifas/home/static/media/payment.cfad17f76b6b94b08c33fc5dffdc5975.svg",
+    "index.html": "/rifas/home/index.html",
+    "static/media/choose.svg": "/rifas/home/static/media/choose.edb4439fc67730063947d9d600bf6392.svg",
+    "main.25326e5c.css.map": "/rifas/home/static/css/main.25326e5c.css.map",
+    "main.6de8f2f2.js.map": "/rifas/home/static/js/main.6de8f2f2.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.25326e5c.css",
+    "static/js/main.6de8f2f2.js"
+  ]
+}
