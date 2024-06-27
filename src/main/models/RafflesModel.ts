@@ -29,6 +29,9 @@ export default function RaffleModel() {
   async function postRaffles(data: RafflePost) {
     setRaffle(await RafflesDataSourceImpl.postRaffles(data));
   }
+  async function postQuotas(data: RafflePost) {
+    setRaffle(await RafflesDataSourceImpl.postRaffles(data));
+  }
   async function putRaffles(data: RafflePut) {
     setRaffle(await RafflesDataSourceImpl.putRaffles(data));
   }
@@ -46,6 +49,7 @@ export default function RaffleModel() {
     getRaffle,
     getRafflesPag,
     postRaffles,
+    postQuotas,
     putRaffles,
     deleteRaffles,
     onChangeValue,
