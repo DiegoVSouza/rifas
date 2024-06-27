@@ -23,3 +23,20 @@ export let api = axios.create({
   },
 });
 
+export let apiViaCep = axios.create({
+  headers: {
+    "Content-Type": "application/json",
+    authorization: `Bearer: ${token}`
+  },
+  validateStatus: (status) => {
+    if (status === 401) {
+      store.dispatch(UserActions.logout());
+      if (window.location.pathname !== "/login") {
+        window.location.pathname = "/login";
+      }
+    }
+    return status >= 200 && status < 300;
+  },
+});
+
+
