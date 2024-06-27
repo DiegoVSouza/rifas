@@ -8,6 +8,7 @@ import { IoTicketOutline } from "react-icons/io5";
 interface RaffleButtonProps extends InputHTMLAttributes<HTMLButtonElement> {
     labelName: string;
     full: boolean;
+    isLoading?: boolean;
 }
 
 type PropsType = "button" | "reset" | "submit" | undefined;
@@ -15,14 +16,14 @@ type PropsType = "button" | "reset" | "submit" | undefined;
 export default function RaffleButton({
     labelName,
     full,
+    isLoading,
     ...props
 }: RaffleButtonProps) {
-    const { colorMode } = useColorMode();
 
-    const { type: propType, size: propSize, ...restProps } = props;
+    const { type: propType, size: propSize, disabled , ...restProps } = props;
 
     return (
-        <Button id='raffle-button-component' leftIcon={<IoTicketOutline/>} {...restProps} type={propType as PropsType}  size={String(propSize)} height='3rem' className={full ? 'full' : ''} background='white' >
+        <Button id='raffle-button-component' isDisabled={disabled} leftIcon={<IoTicketOutline/>} {...restProps} isLoading={isLoading} type={propType as PropsType}  size={String(propSize)} height='3rem' className={full ? 'full' : ''} background='white' >
             <span>{labelName}</span>
         </Button>
     );
