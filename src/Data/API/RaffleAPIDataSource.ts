@@ -1,4 +1,4 @@
-import { RaffleGet, Raffle, RafflePag, RafflePost, RafflePut } from "../../Domain/Model/Raffle";
+import { RaffleGet, Raffle, RafflePag, RafflePost, RafflePut, NumbersPost, Numbers } from "../../Domain/Model/Raffle";
 import RaffleDataSource from "../DataSource/RaffleDataSource";
 import { api } from "../Services/api";
 
@@ -69,6 +69,15 @@ export default class RaffleAPIDataSourceImpl implements RaffleDataSource {
     } catch (error: any) {
       console.log(error.response.data)
       return {} as Raffle;
+    }
+  }
+  async postQuotas(postData: NumbersPost): Promise<Numbers> {
+    try {
+      const { data } = await api.post('/quotas', postData)
+      return data;
+    } catch (error: any) {
+      console.log(error.response.data)
+      return {} as Numbers;
     }
   }
   async putRaffles(putData: RafflePut): Promise<Raffle> {
