@@ -17,6 +17,14 @@ export interface Raffle {
 
 export interface Numbers {
   id: string;
+  raffleId: string;
+  number: number;
+  free: boolean;
+  userId?: string;
+  user?: User;
+}
+export interface NumbersPost {
+  raffleId: string;
   number: number;
   free: boolean;
   userId?: string;
@@ -38,6 +46,8 @@ export interface RaffleGet {
   sorted_by?: string;
   limit?: number;
   page?: number;
+  avaliable?: boolean;
+  
 }
 
 export interface RafflePost {

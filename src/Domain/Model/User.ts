@@ -2,13 +2,13 @@ export interface User {
   id: string
   name: string
   cpf: string
-  phone: number
-  city?: string
+  phone: string
+  city: string
   email?: string
   password?: string
   roleId?: string;
   role?: Role;
-  imageUrl: string;
+  imageUrl?: string;
 }
 
 interface Role{
@@ -21,15 +21,31 @@ interface Role{
 export interface UserPost {
   name: string
   cpf: string
-  phone: number
-  imageUrl: string;
+  phone: string
+  city: string
+  email?: string
+  password?: string
+  roleId?: string;
+  role?: Role;
+  imageUrl?: string;
+}
+
+export interface UserSchema {
+  name: string
+  cpf: string
+  phone: string
 }
 
 export interface UserPut {
   id: string
   name?: string
   cpf?: string
-  phone?: number
+  phone?: string
+  city?: string
+  email?: string
+  password?: string
+  roleId?: string;
+  role?: Role;
   imageUrl?: string;
 }
 
