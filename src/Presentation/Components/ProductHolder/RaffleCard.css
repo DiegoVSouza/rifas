@@ -5,8 +5,26 @@
   align-items: center;
 }
 
+.row-card{
+  background: white;
+  justify-content: flex-start;
+  align-items: flex-start;
+  color: black;
+}
+
+.info-holder{
+  background: var(--blue);
+  border-radius: 1rem;
+  height: 2rem;
+  padding: 0.3rem 1rem;
+}
+
 .text-secundary {
   color: var(--gray-01);
+}
+
+.text-blue{
+  color: var(--blue);
 }
 
 .overlay {
