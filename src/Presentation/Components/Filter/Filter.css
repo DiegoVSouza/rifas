@@ -7,6 +7,18 @@
     cursor: pointer;
 }
 
+.filter-button{
+    background: var(--ligth-blue);
+    color: black !important;
+    padding: 1rem 2rem !important;
+    border-radius: 12px !important;
+}
+
+.filter-active{
+    color: white !important;
+    background: var(--blue) !important;
+}
+
 #number-resume {
     border-left: solid 2px #9F9F9F;
     padding-left: 2rem;

@@ -9,6 +9,14 @@ import {
     Button,
     InputGroup,
     Checkbox,
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem,
+    Slider,
+    SliderTrack,
+    SliderFilledTrack,
+    SliderThumb,
     InputLeftElement
 } from "@chakra-ui/react";
 import { BsSliders, BsViewList } from "react-icons/bs";
@@ -17,74 +25,89 @@ import ButtonComponent from "../Inputs/ButtonComponent";
 import { IoSearch } from "react-icons/io5";
 import './Filter.css';
 import RaffleModel from "../../../main/models/RafflesModel";
-
+import SliderMenu from "../Inputs/SliderMenu";
+import { useEffect, useState } from "react";
+import SelectCity from "../City/SelectCity";
+import { motion, AnimatePresence } from 'framer-motion';
 interface FilterInterface {
     saveFilter: () => void;
     handleSetWithDiscount: () => void;
     handleSetIsNew: () => void;
     showQuantPag: number;
+    isAvaliable: boolean | undefined;
     setShowQuantPag: React.Dispatch<React.SetStateAction<number>>;
     sortedBy: string;
     setSortedBy: React.Dispatch<React.SetStateAction<string>>;
     setSearchName: React.Dispatch<React.SetStateAction<string>>;
+    setIsAvaliabe: React.Dispatch<React.SetStateAction<boolean | undefined>>;
+    values: [number, number];
+    setValues: React.Dispatch<React.SetStateAction<[number, number]>>;
+    setCity: React.Dispatch<React.SetStateAction<string>>;
 }
 
 
-export default function Filter({ saveFilter, 
-    showQuantPag, setShowQuantPag, sortedBy, setSortedBy, setSearchName }: FilterInterface) {
+export default function Filter({ saveFilter,
+    showQuantPag, setShowQuantPag, sortedBy, setSortedBy, setCity, values, setValues,
+    isAvaliable, setIsAvaliabe, setSearchName }: FilterInterface) {
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const { Raffles, RafflesPag } = RaffleModel()
+    const { Raffles, RafflesPag, getRafflesPag } = RaffleModel()
+    const handleSetIsAvaliabe = (avability: string) => {
+        if (avability === 'avaliabe') {
+            if (isAvaliable === true)
+                setIsAvaliabe(undefined)
+            else
+                setIsAvaliabe(true)
+        } else {
+            if (isAvaliable === false)
+                setIsAvaliabe(undefined)
+            else
+                setIsAvaliabe(false)
+        }
+    }
 
+
+    useEffect(() => {
+        getRafflesPag()
+    }, [])
     return (
-        <Flex id="filter-menu" padding={['1rem 2rem', '1rem 2rem', '1rem 3rem', '1.5rem 6.25rem', '1.5rem 6.25rem']}
-            flexWrap='wrap' alignItems='center' justifyContent={['center', 'center', 'space-between', 'space-between', 'space-between']} >
-            <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>Filtro</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                       
-                        <Flex alignItems='center' mt='1rem' gap='0.2rem'>
-                            <Text fontSize='1rem' fontWeight='400'>
-                                Mostrar
-                            </Text>
-                            <Input w='3.5rem' h='3.5rem' background='white' value={showQuantPag} onChange={(e) => setShowQuantPag(+e.target.value)} />
-                            <Text fontSize='1rem' fontWeight='400'>
-                                Ordenar por
-                            </Text>
-                            <Select w='10rem' h='3.5rem' background='white' value={sortedBy} onChange={(e) => setSortedBy(e.target.value)}>
-                                <option value={'asc'}>Crescente</option>
-                                <option value={'dsc'}>Descrescente</option>
-                            </Select>
+        <Flex id="filter-menu" w='100%'
+            flexWrap='wrap' alignItems='flex-start' justifyContent='center' direction='column' gap='1.5rem'>
+
+            <Button className='filter-button filter-active' onClick={() => setIsFilterOpen(!isFilterOpen)}>
+                Filtro
+            </Button>
+
+            <AnimatePresence>
+                {isFilterOpen && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.5 }}
+                        style={{ overflow: 'hidden', width: '100%' }}
+                    >
+                        <Flex alignItems='center' w='100%' flexWrap='wrap' justifyContent='space-between'>
+                            <Flex gap='1rem'>
+                                <Button className={isAvaliable === true ? 'filter-button filter-active' : 'filter-button'} onClick={() => handleSetIsAvaliabe('avaliabe')}>Disponível</Button>
+                                <Button className={isAvaliable === false ? 'filter-button filter-active' : 'filter-button'} onClick={() => handleSetIsAvaliabe('notavaliabe')}>Fechada</Button>
+                            </Flex>
+                            <Flex gap='1rem' alignItems='center'>
+                                <SliderMenu values={values} setValues={setValues} />
+                                <SelectCity isRow setCity={setCity} />
+                            </Flex>
                         </Flex>
 
-                    </ModalBody>
 
-                    <ModalFooter gap='1rem'>
-                        <ButtonComponent width='40%' full={true} onClick={() => saveFilter()} labelName='Save' />
-                        <Button variant='ghost' height='3rem' onClick={onClose}>Cancelar</Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
-            <Flex className='icon-holder' gap={['2rem', '2rem', '2rem', '0.75rem', '0.75rem']} flexWrap='wrap' alignItems='center'>
-                <Flex onClick={onOpen} gap='0.75rem' alignItems='center' id="filter">
-                    <BsSliders size='1.5rem' style={{ transform: 'scaleX(-1)' }} />
-                    <Text fontSize='1.25rem' >Filter</Text>
-                </Flex>
-                {/* <HiViewGrid size='1.5rem' />
-                <BsViewList size='1.5rem' /> */}
-                <Text id="number-resume" fontSize='1rem' ml={['0', '0', '2rem', '2rem', '2rem']} fontWeight='400'>
-                    Mostrando {Raffles?.length || 0} de {RafflesPag.total} produtos
-                </Text>
-            </Flex>
-            
-            <InputGroup w={['100%', '100%', '40%', '30%', '30%']} mt={['2rem', '2rem', '0', '0', '0']}>
-                    <InputLeftElement pointerEvents='none'>
-                        <IoSearch  />
-                    </InputLeftElement>
-                    <Input placeholder='Procurar por nome' color='black' background='white' onChange={(e)=>setSearchName(e.target.value)} />
-                </InputGroup>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+            <InputGroup w='100%' mt={['2rem', '2rem', '0', '0', '0']}>
+                <InputLeftElement pointerEvents='none'>
+                    <IoSearch />
+                </InputLeftElement>
+                <Input placeholder='Procurar por nome' color='black' background='white' onChange={(e) => setSearchName(e.target.value)} />
+            </InputGroup>
         </Flex>
     )
 }
