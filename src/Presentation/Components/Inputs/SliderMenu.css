@@ -1,0 +1,32 @@
+/* SliderMenu.css */
+.horizontal-slider {
+    width: 100%;
+    height: 25px;
+    padding: 1rem 2rem;
+    margin-top: 20px;
+    overflow: hidden;
+  }
+  
+  .example-track {
+    background: #ddd;
+    height: 10px;
+  }
+  
+  .example-track-middle {
+    background: #4A90E2;
+    transform: translateX(10%); /* Cor da linha do track entre os thumbs */
+  }
+  
+  .example-thumb {
+    height: 20px;
+    width: 20px;
+    background-color: var(--secundary);
+    border-radius: 50%;
+    cursor: grab;
+    transform: translateY(-25%); 
+  }
+  
+  .example-thumb.active {
+    background-color: #555;
+  }
+  
