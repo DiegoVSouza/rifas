@@ -8,6 +8,22 @@
     height: 6rem;
     color: black;
     background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.raffle-info{
+    background: white;
+    border-radius: 0.5rem;
+    min-height: 6rem;
+    width: 48%;
+    padding: 1rem;
+}
+
+.winners{
+    min-height: 3.5rem;
 }
 
 .sold{
@@ -17,7 +33,7 @@
 
 .selected{
     color: white;
-    background: var(--secundary);
+    background: var(--blue);
 }
 
 
