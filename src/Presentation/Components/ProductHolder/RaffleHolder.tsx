@@ -26,6 +26,7 @@ import Filter from "../Filter/Filter";
 import RaffleModel from "../../../main/models/RafflesModel";
 import RaffleCard from "./RaffleCard";
 import background from '../../assets/images/backgroundRaffle.png'
+import RaffleCardAdmin from "./RaffleCardAdmin";
 
 interface RaffleHolderInterface {
   feature?: string;
@@ -51,7 +52,9 @@ export default function RaffleHolder({ feature, title, setCategory = false, name
   const [searchName, setSearchName] = useState('')
   const [withDiscount, setWithDiscount] = useState(discount)
   const [isNew, setIsNew] = useState(isnew)
-
+  const [isAvaliable, setIsAvaliabe] = useState<boolean | undefined>(undefined)
+  const [values, setValues] = useState<[number, number]>([10, 900]);
+  const [city, setCity] = useState('')
   const history = useNavigate()
 
   const currentDiscount = () => {
@@ -71,6 +74,7 @@ export default function RaffleHolder({ feature, title, setCategory = false, name
       name: (searchName && searchName !== '') ? searchName : undefined,
       price, limit: showQuantPag,
       page: actualPage, sorted_by: sortedBy,
+      avaliable: isAvaliable,
       discount: currentDiscount()
     }
 
@@ -86,10 +90,9 @@ export default function RaffleHolder({ feature, title, setCategory = false, name
   useEffect(() => {
     if (pagination) {
       handleGetRafflePag()
-
     } else {
       getRafflesPag({
-        name, price,  limit: limit * 2, page: 1,
+        name, price, limit: limit * 2, page: 1,
         discount: currentDiscount()
       }).then(() => {
         setIsLoading(false)
@@ -139,30 +142,34 @@ export default function RaffleHolder({ feature, title, setCategory = false, name
 
       {isLoading ? <LoadingSpinner /> :
 
-        <Box>
+        <Box id='raffles'>
           {
             pagination ?
-              <>
-                <Filter  handleSetIsNew={handleSetIsNew} handleSetWithDiscount={handleSetWithDiscount}
-                  saveFilter={saveFilter} 
+              <Box id="raffle-pagination" padding={['1rem 1rem', '2rem 2rem', '2rem 2rem', '2rem 10rem', '2rem 15rem']}>
+                <Filter handleSetIsNew={handleSetIsNew} handleSetWithDiscount={handleSetWithDiscount}
+                  saveFilter={saveFilter}
                   setShowQuantPag={setShowQuantPag}
                   setSearchName={setSearchName}
-                  setSortedBy={setSortedBy} showQuantPag={showQuantPag} sortedBy={sortedBy}  />
+                  setIsAvaliabe={setIsAvaliabe}
+                  isAvaliable={isAvaliable}
+                  setSortedBy={setSortedBy} showQuantPag={showQuantPag} sortedBy={sortedBy}
+                  values={values} setValues={setValues}
+                  setCity={setCity} />
                 <Box>
                   {feature && <Text className='text-feature' mb='1rem' >{feature}</Text>}
                   {title && <Text fontSize='2.5rem' mb='2rem' fontWeight='600' >{title}</Text>}
-                  <Flex mb='2rem' mt={title ? '' : '2rem'} flexWrap='wrap' justifyContent='center' padding={['0 1.5rem', '0 2rem', '0 3rem', '0 4rem', '0 6.25rem']} gap='2rem'>
+                  <Flex mb='2rem' mt={title ? '' : '2rem'} flexWrap='wrap' direction='column' justifyContent='center' gap='2rem'>
                     {Raffles && Raffles.length && Raffles.map(item => (
-                      <RaffleCard key={item.id} raffle={item} />
+                      <RaffleCardAdmin key={item.id} raffle={item} />
                     ))}
                   </Flex>
                   <Pagination actualPage={actualPage} numberOfpages={RafflesPag.pages} onClick={goToPage} />
                 </Box>
-              </>
+              </Box>
 
               :
-              <Box id="raffle-no-pagination"  pb='3rem'>
-                <Image src={background}/>
+              <Box id="raffle-no-pagination" pb='3rem'>
+                <Image src={background} />
                 {feature && <Text className='text-feature' mb='1rem' >{feature}</Text>}
                 {title && <Text fontSize='2rem' pt='2rem' mb='2rem' fontWeight='600' color='white' >{title}</Text>}
                 <Flex mb='2rem' flexWrap='wrap' justifyContent='center' padding={['0 1.5rem', '0 2rem', '0 3rem', '0 4rem', '0 6.25rem']} gap='2rem'>

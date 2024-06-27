@@ -21,6 +21,11 @@
     color: var(--secundary);
 }
 
+#raffle-pagination {
+    position: relative;
+    background: var(--primary);
+}
+
 #raffle-no-pagination {
     position: relative;
     background: var(--primary);
