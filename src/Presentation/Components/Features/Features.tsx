@@ -12,7 +12,7 @@ import award from '../../assets/images/award.svg'
 export default function Features() {
 
     return (
-        <Box id='features-holder' padding={['1rem', '2rem 2.5rem', '2rem 2.5rem', '2rem 5rem', '2rem 5rem']}>
+        <Box id='howdo' padding={['1rem', '2rem 2.5rem', '2rem 2.5rem', '2rem 5rem', '2rem 5rem']}>
             <Text className='text-yellow' fontSize='1rem' >Comprando bilhetes</Text>
             <Text fontWeight='bold' color='white' fontSize='1.5rem' mb='1rem'>VEJA AQUI COMO É FÁCIL COMPRAR</Text>
             <Flex id='features' mb='1rem' flexWrap='wrap' gap={['2rem', '1rem', '1rem', '1rem', '0']} height={['100%', '100%', '100%', '100%', '17rem']} as='section'
