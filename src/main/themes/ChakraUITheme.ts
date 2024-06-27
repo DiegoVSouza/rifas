@@ -8,7 +8,7 @@ export const theme = extendTheme({
   colors: {
     primary: {
       light: "#C2202A",
-      dark: "#b71f29",
+      dark: "#C2202A",
     },
     secondary: {
       light: "#F7A406",
@@ -16,7 +16,7 @@ export const theme = extendTheme({
     },
     background: {
       light: "#fff",
-      dark: "#32333d",
+      dark: "#fff",
     },
   },
   styles: {
@@ -26,10 +26,10 @@ export const theme = extendTheme({
         margin: "0",
         transition: "background-color 0.25s",
         // backgroundColor: props.colorMode === "light" ? "background.light" : "background.dark",
-        color: props.colorMode === "light" ? "gray.800" : "gray.100",
+        color: props.colorMode === "light" ? "gray.800" : "gray.800",
       },
       button:{
-        backgroundColor: props.colorMode === "light" ? "background.light" : "background.dark",
+        backgroundColor: props.colorMode === "light" ? "background.light" : "background.light",
       }
     }),
   },
@@ -83,7 +83,7 @@ export const theme = extendTheme({
         return {
           fontSize: props.isDark ? "1.2rem" : "1rem",
         //   color: props.colorMode === "light" ? "primary.light" : "primary.dark",
-          bgColor: props.colorMode === "light" ? "background.light" : "background.dark",
+          bgColor: props.colorMode === "light" ? "background.light" : "background.light",
           margin: margin,
           padding: "1rem",
           borderWidth: "1px",
