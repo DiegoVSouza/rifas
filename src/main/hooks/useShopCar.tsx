@@ -1,12 +1,13 @@
 /* eslint-disable no-console */
 import { createContext, ReactNode, useContext, useState } from "react";
-import { ProductShopCar, ShopCar } from "../../Domain/Model/ShopCar";
+import {  ShopCar } from "../../Domain/Model/ShopCar";
+import { Numbers } from "../../Domain/Model/Raffle";
 
 interface ShopCarContextProps {
-    onAddProduct: (productShopCar: ProductShopCar) => void;
+    onAddNumber: (productShopCar: Numbers) => void;
     onChangeShopCarProduct: (id: string, quantity: number) => void;
     onRemoveProduct: (id: string) => void;
-    setRaffleId: (id: string) => void;
+    handleSetRaffleId: (id: string) => void;
     raffleId: string;
     ShopCar: ShopCar
 }
@@ -18,7 +19,13 @@ interface Props {
 const ShopCarContext = createContext({} as ShopCarContextProps);
 
 function ShopCarProvider({ children }: Props) {
-    const [raffleId, setRaffleId] = useState('')
+    const [raffleId, setRaffleId] = useState(() => {
+        let shopLocal = localStorage.getItem('@raffleId')
+        if (shopLocal) {
+            return JSON.parse(shopLocal)
+        }
+        return undefined
+    });
     const [ShopCar, setShopCar] = useState<ShopCar>(() => {
         let shopLocal = localStorage.getItem('@shopCar')
         if (shopLocal) {
@@ -27,18 +34,18 @@ function ShopCarProvider({ children }: Props) {
         return undefined
     });
 
-    function onAddProduct(productShopCar: ProductShopCar) {
+    function onAddNumber(number: Numbers) {
         if (ShopCar) {
-            let products = ShopCar.products
-            let newProducts = [...products]
-            newProducts.push(productShopCar)
-            ShopCar.products = newProducts
+            let numbers = ShopCar.numbers
+            let newProducts = [...numbers]
+            newProducts.push(number)
+            ShopCar.numbers = newProducts
             localStorage.setItem("@shopCar", JSON.stringify(ShopCar))
             setShopCar(ShopCar);
         } else {
-            let newProducts = []
-            newProducts.push(productShopCar)
-            let shopcar = { products: newProducts }
+            let newNumbers = []
+            newNumbers.push(number)
+            let shopcar = { numbers: newNumbers }
             localStorage.setItem("@shopCar", JSON.stringify(shopcar))
             setShopCar(shopcar);
         }
@@ -46,12 +53,12 @@ function ShopCarProvider({ children }: Props) {
 
     function onChangeShopCarProduct(id: string, quantity: number) {
         if (ShopCar) {
-            let products = ShopCar.products
-            products.map(item => {
+            let numbers = ShopCar.numbers
+            numbers.map(item => {
                 if (item.id === id)
-                    item.qtd = quantity
+                    onRemoveProduct(id)
             })
-            ShopCar.products = products
+            ShopCar.numbers = numbers
             localStorage.setItem("@shopCar", JSON.stringify(ShopCar))
             setShopCar(ShopCar);
         }
@@ -59,19 +66,24 @@ function ShopCarProvider({ children }: Props) {
 
     function onRemoveProduct(id: string) {
         if (ShopCar) {
-            let newProducts = ShopCar.products.filter(item => item.id !== id)
-            let newShopCar = { products: newProducts }
+            let newNumbers = ShopCar.numbers.filter(item => item.id !== id)
+            let newShopCar = { numbers: newNumbers }
             localStorage.setItem("@shopCar", JSON.stringify(newShopCar))
             setShopCar(newShopCar)
         }
     }
 
+    function handleSetRaffleId(id:string){
+        localStorage.setItem("@raffleId", JSON.stringify(id))
+        setRaffleId(id)
+    }
+
     return (
         <ShopCarContext.Provider value={{
-            onAddProduct,
+            onAddNumber,
             onChangeShopCarProduct,
             onRemoveProduct,
-            setRaffleId,
+            handleSetRaffleId,
             raffleId,
             ShopCar
         }}>
