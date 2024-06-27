@@ -44,7 +44,7 @@ const Sidebar = () => {
                     <DrawerBody height='100%' display='flex' flexDirection='column' alignItems='center' justifyContent='space-between'>
                         <Flex w='100%' direction='column' gap='1rem' >
                             <Button variant='ghost' w="full" onClick={() => goToLink('raffles')}>Rifas</Button>
-                            <Button variant='ghost' w="full" onClick={() => goToLink('about')}>Como Funciona?</Button>
+                            <Button variant='ghost' w="full" onClick={() => goToLink('howdo')}>Como Funciona?</Button>
                             <Button variant='ghost' w="full" onClick={() => goToLink('winners')}>Ganhadores</Button>
                         </Flex>
 
