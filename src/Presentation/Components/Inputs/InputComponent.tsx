@@ -1,60 +1,102 @@
-import { FieldErrors, useForm, UseFormRegister } from "react-hook-form";
+import React from "react";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { CgDanger } from "react-icons/cg";
-import { InputHTMLAttributes } from "react";
-import { Box, Flex, FormErrorMessage, FormLabel, Input, FormControl, Text, useColorMode } from "@chakra-ui/react";
-import './InputComponent.css'
+import {
+    Box,
+    Flex,
+    FormErrorMessage,
+    FormLabel,
+    Input,
+    FormControl,
+    Text,
+    useColorMode,
+    Select,
+    Textarea,
+} from "@chakra-ui/react";
+import './InputComponent.css';
+import get from 'lodash/get';
 
-interface InputComponentProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputComponentProps extends React.InputHTMLAttributes<HTMLInputElement> {
     labelName: string;
     inputName: string;
+    isSelect?: boolean;
+    options?: { value: string; label: string }[];
     width?: string;
+    textArea?: boolean;
     register: UseFormRegister<any>;
     errors: FieldErrors;
 }
 
-export default function InputComponent({
+const InputComponent: React.FC<InputComponentProps> = React.memo(({
     labelName,
     inputName,
+    isSelect = false,
+    options,
     width,
     register,
     errors,
+    textArea,
     ...props
-}: InputComponentProps) {
+}) => {
     const { colorMode } = useColorMode();
 
-    const { size: propSize, ...restProps } = props;
+    const renderInput = () => {
+        if (isSelect) {
+            return (
+                <Select {...register(inputName)} disabled={props.disabled}>
+                    <option value="">Escolha uma opção</option>
+                    {options?.map((item) => (
+                        <option key={item.value} value={item.value}>
+                            {item.label}
+                        </option>
+                    ))}
+                </Select>
+            );
+        } else if (textArea) {
+            return (
+                <Textarea
+                    disabled={props.disabled}
+                    placeholder=" "
+                    size={props.size ? String(props.size) : undefined}
+                    {...register(inputName)}
+                />
+            );
+        } else {
+            return (
+                <Input
+                    placeholder=" "
+                    {...props}
+                    size={props.size ? String(props.size) : undefined}
+                    {...register(inputName)}
+                />
+            );
+        }
+    };
+
     return (
         <Box
             as="section"
-            m='1rem 0'
-            width={width ? width : 'auto'}
-            className={
-                errors[inputName]
-                    ? "inputError"
-                    : "inputComponent"
-            }
+            m="1rem 0"
+            width={width || 'auto'}
+            className={errors[inputName] ? "inputError" : "inputComponent"}
         >
-            <FormControl variant="floating" id={inputName} isInvalid={errors[inputName]?.message ? true : false}>
-
-                <Input
-                placeholder=" "
-                    {...restProps}
-                    size={propSize ? String(propSize) : undefined}
-                    {...register(`${inputName}`)}
-                />
+            <FormControl variant="floating" id={inputName} isInvalid={!!get(errors, inputName)?.message}>
+                {renderInput()}
                 <FormLabel
                     color={colorMode === "light" ? "black !important" : "white !important"}
-                    fontWeight={'bold'}
+                    fontWeight="bold"
                 >
                     {labelName}
                 </FormLabel>
-
-                {errors[inputName]?.message && (
-                    <Flex w='100%' gap='0.5rem' alignItems='center'>
-                        <CgDanger color="red" size={18} /> <Text color='red'>{errors[inputName]?.message as string}</Text>
+                {get(errors, inputName)?.message && (
+                    <Flex w="100%" gap="0.5rem" alignItems="center">
+                        <CgDanger color="red" size={18} /> 
+                        <Text color="red">{get(errors, inputName)?.message as string}</Text>
                     </Flex>
                 )}
             </FormControl>
         </Box>
     );
-}
+});
+
+export default InputComponent;
