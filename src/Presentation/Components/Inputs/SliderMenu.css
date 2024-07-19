@@ -24,6 +24,7 @@
     border-radius: 50%;
     cursor: grab;
     transform: translateY(-25%); 
+    z-index: 2;
   }
   
   .example-thumb.active {

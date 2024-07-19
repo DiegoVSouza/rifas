@@ -1,4 +1,4 @@
-import { RaffleGet, Raffle, RafflePag, RafflePost, RafflePut, NumbersPost, Numbers } from "../../Domain/Model/Raffle";
+import { RaffleGet, Raffle, RafflePag, RafflePost, RafflePut, NumbersPost, Numbers, WinnerPost } from "../../Domain/Model/Raffle";
 import RaffleDataSource from "../DataSource/RaffleDataSource";
 import { api } from "../Services/api";
 
@@ -6,7 +6,7 @@ import { api } from "../Services/api";
 export default class RaffleAPIDataSourceImpl implements RaffleDataSource {
   async getRaffles(params?: RaffleGet): Promise<Raffle[]> {
     try {
-      let url = '/Raffle';
+      let url = '/raffles';
       let isFirstParam = true;
 
       if (params) {
@@ -35,7 +35,7 @@ export default class RaffleAPIDataSourceImpl implements RaffleDataSource {
 
   async getRafflesPag(params?: RaffleGet): Promise<RafflePag> {
     try {
-      let url = '/Raffle/pag';
+      let url = '/raffles';
       let isFirstParam = true;
 
       if (params) {
@@ -55,6 +55,19 @@ export default class RaffleAPIDataSourceImpl implements RaffleDataSource {
       }
 
       const { data } = await api.get(url);
+      let raffles = [] as any[]
+      if (data.raffles) {
+        data.raffles.map((item: any) => {
+          const { __quotas__, __winners__, ...restData } = item
+          console.log(item)
+          console.log(__quotas__)
+          let newData = { ...restData, quotas: __quotas__, winners: __winners__ }
+          raffles.push(newData)
+        })
+
+        data.raffles = raffles
+      }
+
       return data;
     } catch (error: any) {
       console.log(error);
@@ -64,37 +77,65 @@ export default class RaffleAPIDataSourceImpl implements RaffleDataSource {
 
   async postRaffles(postData: RafflePost): Promise<Raffle> {
     try {
-      const { data } = await api.post('/Raffle', postData)
+      let formData = new FormData();
+      Object.entries(postData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      const { data } = await api.post('/raffles', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      // const { data } = await api.post('/raffles', postData)
       return data;
     } catch (error: any) {
-      console.log(error.response.data)
+      console.log(error)
       return {} as Raffle;
     }
   }
   async postQuotas(postData: NumbersPost): Promise<Numbers> {
     try {
-      const { data } = await api.post('/quotas', postData)
+      const { data } = await api.post('/raffles/quotas', postData)
       return data;
     } catch (error: any) {
-      console.log(error.response.data)
+      console.log(error)
       return {} as Numbers;
+    }
+  }
+
+  async postWinner(postData: WinnerPost): Promise<Raffle> {
+    try {
+      let formData = new FormData();
+      Object.entries(postData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+      const { data } = await api.post('/raffles/winners', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return data;
+    } catch (error: any) {
+      console.log(error)
+      return {} as Raffle;
     }
   }
   async putRaffles(putData: RafflePut): Promise<Raffle> {
     try {
-      const { data } = await api.put(`/Raffle/${putData.id}`, putData)
+      const { data } = await api.put(`/raffles/${putData.id}`, putData)
       return data;
     } catch (error: any) {
-      console.log(error.response.data)
+      console.log(error)
       return {} as Raffle;
     }
   }
-  async deleteRaffles(RaffleId: string): Promise<Raffle> {
+  async deleteRaffles(raffle_id: string): Promise<Raffle> {
     try {
-      const { data } = await api.delete(`/Raffle/${RaffleId}`)
+      const { data } = await api.delete(`/raffles/${raffle_id}`)
       return data;
     } catch (error: any) {
-      console.log(error.response.data)
+      console.log(error)
       return {} as Raffle;
     }
   }

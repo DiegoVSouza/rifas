@@ -41,7 +41,7 @@ export default function Header() {
                 <Flex gap='1rem' className='nav-buttons'>
                     <ListItem><Button variant='link' fontSize='1.2rem' onClick={() => goToLink('raffles')}>Rifas</Button></ListItem>
                     <ListItem><Button variant='link' fontSize='1.2rem' onClick={() => goToLink('howdo')}>Como Funciona?</Button></ListItem>
-                    <ListItem><Button variant='link' fontSize='1.2rem' onClick={() => goToLink('winners')}>Ganhadores</Button></ListItem>
+                    <ListItem><Button variant='link' fontSize='1.2rem' onClick={() => history('/winners')}>Ganhadores</Button></ListItem>
                 </Flex>
 
                 <Flex justifyContent='space-between' alignItems='center' gap='2.5rem'>

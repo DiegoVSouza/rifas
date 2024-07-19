@@ -45,7 +45,7 @@ const Sidebar = () => {
                         <Flex w='100%' direction='column' gap='1rem' >
                             <Button variant='ghost' w="full" onClick={() => goToLink('raffles')}>Rifas</Button>
                             <Button variant='ghost' w="full" onClick={() => goToLink('howdo')}>Como Funciona?</Button>
-                            <Button variant='ghost' w="full" onClick={() => goToLink('winners')}>Ganhadores</Button>
+                            <Button variant='ghost' w="full" onClick={() => history('/winners')}>Ganhadores</Button>
                         </Flex>
 
                         <ToggleColorButton />

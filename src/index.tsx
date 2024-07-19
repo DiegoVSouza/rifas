@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { theme } from './main/themes/ChakraUITheme';
 import { ShopCarProvider } from './main/hooks/useShopCar';
+import { RaffleProvider } from './main/hooks/useRaffleModel';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -20,15 +21,15 @@ root.render(
   <React.StrictMode>
     <ToastContainer />
     <IconContext.Provider value={{ className: 'react-icons' }}>
-      <Provider store={store}>
-        <ChakraProvider theme={theme}>
-            <ShopCarProvider>
-              <BrowserRouter>
-                <Routers />
-              </BrowserRouter>
-            </ShopCarProvider>
-        </ChakraProvider>
-      </Provider>
+      <ChakraProvider theme={theme}>
+        <RaffleProvider>
+          <ShopCarProvider>
+            <BrowserRouter>
+              <Routers />
+            </BrowserRouter>
+          </ShopCarProvider>
+        </RaffleProvider>
+      </ChakraProvider>
 
     </IconContext.Provider>
   </React.StrictMode>

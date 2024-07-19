@@ -23,10 +23,11 @@ import './RaffleHolder.css'
 import { RaffleGet } from "../../../Domain/Model/Raffle";
 import { useNavigate } from "react-router-dom";
 import Filter from "../Filter/Filter";
-import RaffleModel from "../../../main/models/RafflesModel";
 import RaffleCard from "./RaffleCard";
 import background from '../../assets/images/backgroundRaffle.png'
 import RaffleCardAdmin from "./RaffleCardAdmin";
+import CreateModal from "../Modals/CreateModal";
+import { RaffleModel } from "../../../main/hooks/useRaffleModel";
 
 interface RaffleHolderInterface {
   feature?: string;
@@ -41,7 +42,7 @@ interface RaffleHolderInterface {
   limit: number;
 }
 
-export default function RaffleHolder({ feature, title, setCategory = false, name, price, discount = undefined, isnew = undefined, goDirectForShop = false, pagination = false, limit = 8 }: RaffleHolderInterface) {
+export default function RaffleHolderAdmin({ feature, title, setCategory = false, name, price, discount = undefined, isnew = undefined, goDirectForShop = false, pagination = false, limit = 8 }: RaffleHolderInterface) {
   const { Raffles, getRafflesPag, RafflesPag } = RaffleModel()
 
   const [showQuant, setShowQuant] = useState(limit)
@@ -69,13 +70,14 @@ export default function RaffleHolder({ feature, title, setCategory = false, name
     }
   }
 
-  const handleGetRafflePag = (key?: string, value?: string | number | boolean | undefined, load = true) => {
+  const handleGetRafflePag = (key?: string, value?: string | number | boolean | [number, number] | undefined, load = false) => {
     let params: RaffleGet = {
-      name: (searchName && searchName !== '') ? searchName : undefined,
-      price, limit: showQuantPag,
-      page: actualPage, sorted_by: sortedBy,
+      tittle: (searchName && searchName !== '') ? searchName : undefined,
+      limit: showQuantPag,
+      page: actualPage,
+      city: city !== '' ? city : undefined,
       avaliable: isAvaliable,
-      discount: currentDiscount()
+      prices: values,
     }
 
     if (key)
@@ -88,17 +90,7 @@ export default function RaffleHolder({ feature, title, setCategory = false, name
   }
 
   useEffect(() => {
-    if (pagination) {
-      handleGetRafflePag()
-    } else {
-      getRafflesPag({
-        name, price, limit: limit * 2, page: 1,
-        discount: currentDiscount()
-      }).then(() => {
-        setIsLoading(false)
-      })
-    }
-
+    handleGetRafflePag(undefined,undefined,true)
   }, [])
 
   useEffect(() => {
@@ -106,6 +98,19 @@ export default function RaffleHolder({ feature, title, setCategory = false, name
       handleGetRafflePag('name', searchName, false)
   }, [searchName])
 
+  useEffect(() => {
+    if (city != '')
+      handleGetRafflePag('city', city, false)
+  }, [city])
+
+  useEffect(() => {
+    if (values.length)
+      handleGetRafflePag('values', values, false)
+  }, [values])
+
+  useEffect(() => {
+    handleGetRafflePag()
+  }, [isAvaliable, showQuantPag])
 
   const showMore = () => {
     if (goDirectForShop) {
@@ -135,51 +140,37 @@ export default function RaffleHolder({ feature, title, setCategory = false, name
     setIsNew(!isNew);
   }
 
-  console.log(Raffles)
 
   return (
-    <Box as='section' textAlign='center' >
+    <Box as='section' textAlign='center' position='relative' >
+      <CreateModal />
 
       {isLoading ? <LoadingSpinner /> :
 
         <Box id='raffles'>
-          {
-            pagination ?
-              <Box id="raffle-pagination" padding={['1rem 1rem', '2rem 2rem', '2rem 2rem', '2rem 10rem', '2rem 15rem']}>
-                <Filter handleSetIsNew={handleSetIsNew} handleSetWithDiscount={handleSetWithDiscount}
-                  saveFilter={saveFilter}
-                  setShowQuantPag={setShowQuantPag}
-                  setSearchName={setSearchName}
-                  setIsAvaliabe={setIsAvaliabe}
-                  isAvaliable={isAvaliable}
-                  setSortedBy={setSortedBy} showQuantPag={showQuantPag} sortedBy={sortedBy}
-                  values={values} setValues={setValues}
-                  setCity={setCity} />
-                <Box>
-                  {feature && <Text className='text-feature' mb='1rem' >{feature}</Text>}
-                  {title && <Text fontSize='2.5rem' mb='2rem' fontWeight='600' >{title}</Text>}
-                  <Flex mb='2rem' mt={title ? '' : '2rem'} flexWrap='wrap' direction='column' justifyContent='center' gap='2rem'>
-                    {Raffles && Raffles.length && Raffles.map(item => (
-                      <RaffleCardAdmin key={item.id} raffle={item} />
-                    ))}
-                  </Flex>
-                  <Pagination actualPage={actualPage} numberOfpages={RafflesPag.pages} onClick={goToPage} />
-                </Box>
-              </Box>
+          <Box id="raffle-pagination" padding={['1rem 1rem', '2rem 2rem', '2rem 2rem', '2rem 10rem', '2rem 15rem']}>
+            <Filter handleSetIsNew={handleSetIsNew} handleSetWithDiscount={handleSetWithDiscount}
+              saveFilter={saveFilter}
+              setShowQuantPag={setShowQuantPag}
+              setSearchName={setSearchName}
+              setIsAvaliabe={setIsAvaliabe}
+              isAvaliable={isAvaliable}
+              setSortedBy={setSortedBy} showQuantPag={showQuantPag} sortedBy={sortedBy}
+              values={values} setValues={setValues}
+              setCity={setCity} />
 
-              :
-              <Box id="raffle-no-pagination" pb='3rem'>
-                <Image src={background} />
-                {feature && <Text className='text-feature' mb='1rem' >{feature}</Text>}
-                {title && <Text fontSize='2rem' pt='2rem' mb='2rem' fontWeight='600' color='white' >{title}</Text>}
-                <Flex mb='2rem' flexWrap='wrap' justifyContent='center' padding={['0 1.5rem', '0 2rem', '0 3rem', '0 4rem', '0 6.25rem']} gap='2rem'>
-                  {Raffles && Raffles.length && Raffles.slice(0, showQuant).map(item => (
-                    <RaffleCard key={item.id} raffle={item} />
-                  ))}
-                </Flex>
-                {/* <ButtonComponent full={false} width='16rem' labelName="Ver mais" onClick={() => showMore()} /> */}
-              </Box>
-          }
+            <Box>
+              {feature && <Text className='text-feature' mb='1rem' >{feature}</Text>}
+              {title && <Text fontSize='2.5rem' mb='2rem' fontWeight='600' >{title}</Text>}
+              <Flex mb='2rem' mt={title ? '' : '2rem'} flexWrap='wrap' direction='column' justifyContent='center' gap='2rem'>
+                {Raffles && Raffles.length && Raffles.map(item => (
+                  <RaffleCardAdmin key={item.id} raffle={item} />
+                ))}
+              </Flex>
+              <Pagination actualPage={actualPage} numberOfpages={RafflesPag.pages} onClick={goToPage} />
+            </Box>
+          </Box>
+
         </Box>
 
       }

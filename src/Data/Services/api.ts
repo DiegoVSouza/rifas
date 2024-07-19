@@ -5,6 +5,7 @@ import { Creators as UserActions } from "../../store/modules/user/actions";
 const localhost = 'http://localhost:81';
 
 const token = localStorage.getItem("@token");
+
 export let api = axios.create({
   headers: {
     "Content-Type": "application/json",

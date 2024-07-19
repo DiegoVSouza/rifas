@@ -9,20 +9,20 @@ import { LuArrowLeftRight } from "react-icons/lu";
 import { FaRegHeart } from "react-icons/fa6";
 import formatCurrency from '../../../utils/FormatCurrency';
 import TruncatedText from '../Inputs/TruncatedText';
-import RaffleModel from '../../../main/models/RafflesModel';
 import { useShopCar } from '../../../main/hooks/useShopCar';
 import RaffleButton from '../Inputs/RaffleButton';
 import dayjs from 'dayjs';
+import { RaffleModel } from '../../../main/hooks/useRaffleModel';
 
 interface RaffleCardInterface {
     raffle: Raffle;
 }
 
 export default function RaffleCard({ raffle }: RaffleCardInterface) {
-    const { handleSetRaffleId } = useShopCar()
+    const { onChangeValue } = RaffleModel()
     const history = useNavigate()
     const goToRafflePage = () => {
-        handleSetRaffleId(raffle.id)
+        onChangeValue(raffle.id)
         history(`/rifa/${raffle.title.split(' ').join('-').toLocaleLowerCase()}`)
     }
     return (
@@ -31,7 +31,7 @@ export default function RaffleCard({ raffle }: RaffleCardInterface) {
                 textAlign='center'>{raffle.title}</Text>
             <Text cursor='pointer' fontSize='1rem' mb='0.5rem'
                 fontWeight='regular'>DISPONÍVEIS: {Number(raffle.free)}</Text>
-            <Image w={'100%'} height='19rem' src={raffle.imageUrl} />
+            <Image w={'100%'} height='19rem' src={raffle.image_url} />
             <Box padding='1rem 0 2rem 1rem' gap='0.5rem' overflow='hidden'>
                 <Text fontSize='2.5rem' fontWeight='bold'>{formatCurrency(raffle.price)}</Text>
             </Box>

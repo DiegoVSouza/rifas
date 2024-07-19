@@ -3,5 +3,5 @@ import { Numbers } from "./Raffle";
 
 
 export interface ShopCar{
-    numbers: Numbers[]
+    quotas: Numbers[]
 }

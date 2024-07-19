@@ -6,12 +6,17 @@ export interface User {
   city: string
   email?: string
   password?: string
-  roleId?: string;
+  role_id?: string;
   role?: Role;
-  imageUrl?: string;
+  image_url?: string;
 }
 
-interface Role{
+export interface Admin {
+  email: string;
+  password: string;
+}
+
+interface Role {
   id: string;
   value: string;
   label: string;
@@ -25,9 +30,25 @@ export interface UserPost {
   city: string
   email?: string
   password?: string
-  roleId?: string;
+  role_id?: string;
   role?: Role;
-  imageUrl?: string;
+  image_url?: string;
+}
+
+export interface UserPag {
+  users: User[];
+  pages: number;
+  total: number;
+}
+
+export interface UserGet {
+  [key: string]: string | number | boolean | undefined;
+  raffle_id?: string;
+  name?: string
+  cpf?: string
+  phone?: string
+  limit?: number;
+  page?: number;
 }
 
 export interface UserSchema {
@@ -44,8 +65,8 @@ export interface UserPut {
   city?: string
   email?: string
   password?: string
-  roleId?: string;
+  role_id?: string;
   role?: Role;
-  imageUrl?: string;
+  image_url?: string;
 }
 

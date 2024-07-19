@@ -24,12 +24,12 @@ interface SliderMenuInterface {
 const SliderMenu = ({ values, setValues }: SliderMenuInterface) => {
 
     return (
-        <Menu>
+        <Menu >
         <MenuButton borderRadius='12px' as={Button} rightIcon={<IoIosArrowDown />}>
-            <Text>R$ {values[0]} - R$ {values[1]}</Text>
+            <Text w='8rem'>R$ {values[0]} - R$ {values[1]}</Text>
         </MenuButton>
-        <MenuList>
-          <Box padding='1rem 2rem'>
+        <MenuList zIndex={99}>
+          <Box padding='1rem 2rem' > 
             <Text w='15rem'>Faixa selecionada: {values[0]} - {values[1]}</Text>
             <ReactSlider
               className="horizontal-slider"

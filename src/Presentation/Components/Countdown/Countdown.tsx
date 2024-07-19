@@ -52,7 +52,6 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) => {
             }
         });
 
-    console.log("timeLeft", timeLeft)
     return (
         <Flex as='section' id='countdown' w='100%'>
             {timeLeft ?

@@ -24,7 +24,6 @@ import { HiViewGrid } from "react-icons/hi";
 import ButtonComponent from "../Inputs/ButtonComponent";
 import { IoSearch } from "react-icons/io5";
 import './Filter.css';
-import RaffleModel from "../../../main/models/RafflesModel";
 import SliderMenu from "../Inputs/SliderMenu";
 import { useEffect, useState } from "react";
 import SelectCity from "../City/SelectCity";
@@ -51,7 +50,7 @@ export default function Filter({ saveFilter,
     isAvaliable, setIsAvaliabe, setSearchName }: FilterInterface) {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const { Raffles, RafflesPag, getRafflesPag } = RaffleModel()
+
     const handleSetIsAvaliabe = (avability: string) => {
         if (avability === 'avaliabe') {
             if (isAvaliable === true)
@@ -67,9 +66,6 @@ export default function Filter({ saveFilter,
     }
 
 
-    useEffect(() => {
-        getRafflesPag()
-    }, [])
     return (
         <Flex id="filter-menu" w='100%'
             flexWrap='wrap' alignItems='flex-start' justifyContent='center' direction='column' gap='1.5rem'>
@@ -87,15 +83,15 @@ export default function Filter({ saveFilter,
                         transition={{ duration: 0.5 }}
                         style={{ overflow: 'hidden', width: '100%' }}
                     >
-                        <Flex alignItems='center' w='100%' flexWrap='wrap' justifyContent='space-between'>
+                        <Flex alignItems='center' w='100%' flexWrap='wrap' gap='1rem' justifyContent='space-between'>
                             <Flex gap='1rem'>
                                 <Button className={isAvaliable === true ? 'filter-button filter-active' : 'filter-button'} onClick={() => handleSetIsAvaliabe('avaliabe')}>Disponível</Button>
                                 <Button className={isAvaliable === false ? 'filter-button filter-active' : 'filter-button'} onClick={() => handleSetIsAvaliabe('notavaliabe')}>Fechada</Button>
                             </Flex>
-                            <Flex gap='1rem' alignItems='center'>
-                                <SliderMenu values={values} setValues={setValues} />
+                            <Flex gap='1rem' alignItems='center' flexWrap='wrap'>
                                 <SelectCity isRow setCity={setCity} />
-                            </Flex>
+                                <SliderMenu values={values} setValues={setValues} />
+                                </Flex>
                         </Flex>
 
 

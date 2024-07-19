@@ -1,10 +1,10 @@
 import './HomeView.css'
 import { Box, Image, Text } from "@chakra-ui/react";
-import ProductHolder from "../../Components/ProductHolder/RaffleHolder";
 import Features from "../../Components/Features/Features";
 import home from '../../assets/images/home.png'
 import ButtonComponent from '../../Components/Inputs/ButtonComponent';
 import { useNavigate } from 'react-router-dom';
+import RaffleHolder from '../../Components/RaffleHolder/RaffleHolder';
 export default function HomeView() {
   const history = useNavigate()
   const goToRaffles = () => {
@@ -26,7 +26,7 @@ export default function HomeView() {
         </Box>
       </Box>
       <Features  />
-      <ProductHolder discount={true} isnew={false} goDirectForShop={true} title='Rifas' limit={8} pagination={false}/>
+      <RaffleHolder  goDirectForShop={true} title='Rifas' limit={8} pagination={false}/>
     </main>
   );  
 }

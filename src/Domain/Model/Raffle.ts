@@ -3,13 +3,13 @@ import { User } from "./User";
 export interface Raffle {
   id: string;
   title: string;
-  imageUrl: string;
+  image_url: string;
   city: string;
   price: number;
   total: number;
   free: number;
   date: Date;
-  numbers: Numbers[]
+  quotas: Numbers[]
   winners?: User[];
   regulation: string;
   description: string;
@@ -17,28 +17,27 @@ export interface Raffle {
 
 export interface Numbers {
   id: string;
-  raffleId: string;
+  raffle_id: string;
   number: number;
   free: boolean;
-  userId?: string;
-  user?: User;
-}
-export interface NumbersPost {
-  raffleId: string;
-  number: number;
-  free: boolean;
-  userId?: string;
+  user_id?: string;
   user?: User;
 }
 
+export interface NumbersPost {
+  raffle_id: string;
+  quotas: number[];
+  user_id: string;
+}
+
 export interface RafflePag {
-  Raffles: Raffle[];
+  raffles: Raffle[];
   pages: number;
   total: number;
 }
 
 export interface RaffleGet {
-  [key: string]: string | number | boolean | undefined;
+  [key: string]: string | number | boolean | [number,number] | undefined;
   id?: string;
   name?: string;
   city?: string;
@@ -47,23 +46,31 @@ export interface RaffleGet {
   limit?: number;
   page?: number;
   avaliable?: boolean;
-  
+  prices?: [number,number]
 }
 
 export interface RafflePost {
   title: string;
-  imageUrl: string;
+  image_url: any;
   city: string;
   price: number;
   total: number;
   date: Date;
   regulation: string;
+  description: string;
 }
+
+export interface WinnerPost {
+  raffle_id: string;
+  user_id: string;
+  image_url: any;
+}
+
 
 export interface RafflePut {
   id: string;
   title?: string;
-  imageUrl?: string;
+  image_url?: string;
   city?: string;
   price?: number;
   total?: number;
@@ -71,5 +78,6 @@ export interface RafflePut {
   numbers?: Numbers[]
   winners?: User[];
   regulation?: string;
+  description?: string;
 }
 

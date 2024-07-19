@@ -16,7 +16,7 @@ import CountdownTimer from '../Countdown/Countdown';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import ButtonComponent from '../Inputs/ButtonComponent';
 import { useShopCar } from '../../../main/hooks/useShopCar';
-import RaffleModel from '../../../main/models/RafflesModel';
+import { RaffleModel } from '../../../main/hooks/useRaffleModel';
 import InputComponent from '../Inputs/InputComponent';
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -28,6 +28,7 @@ import SelectCity from '../City/SelectCity';
 import { formatCPF } from '../../../utils/CPF';
 import { formatPhone } from '../../../utils/Phone';
 import { useNavigate } from 'react-router-dom';
+import { calculeNumbers } from '../../../utils/Calculate';
 require('dayjs/locale/pt-br')
 
 interface RaffleComponentInterface {
@@ -70,23 +71,7 @@ export default function RaffleComponent({ raffle }: RaffleComponentInterface) {
     resolver: yupResolver(userSchema),
   });
 
-  const calculeNumbers = () => {
-    let numbers: Numbers[] = []
-    for (var i = 1; i <= raffle.total; i++) {
-      numbers.push({ number: i, free: true, id: '', raffleId: raffle.id })
-    }
 
-    if (raffle.numbers) {
-      if (raffle.numbers.length > 0) {
-        for (var i = 0; i <= raffle.numbers.length; i++) {
-          let index = numbers.findIndex(item => item.number === raffle.numbers[i]?.number)
-          numbers[index] = raffle.numbers[i]
-        }
-      }
-    }
-
-    return numbers;
-  }
 
   const handleSelectNumber = (number: number) => {
     let oldNumbers = [...selectedNumbers]
@@ -99,7 +84,7 @@ export default function RaffleComponent({ raffle }: RaffleComponentInterface) {
   }
 
   const renderNumbers = () => {
-    let numbers = calculeNumbers()
+    let numbers = calculeNumbers(raffle.total,raffle.quotas,raffle.id)
     let boxes: JSX.Element[] = [];
     numbers.map(item => boxes.push(
       <Box onClick={() => item.free ? handleSelectNumber(item.number) : () => { }} cursor='pointer' className={!item.free ? 'number-select sold' :
@@ -113,7 +98,7 @@ export default function RaffleComponent({ raffle }: RaffleComponentInterface) {
 
   const submitNumbers = async (data: UserSchema) => {
     // Dados de exemplo
-    const phoneNumber = '558893550370'; // Substitua pelo número de telefone desejado
+    const phoneNumber = '558381613615'; // Substitua pelo número de telefone desejado
     const raffleTitle = raffle.title;
     const raffleDate = dayjs(raffle.date).format("DD/MM/YYYY");
     const userName = data.name;
@@ -220,7 +205,7 @@ export default function RaffleComponent({ raffle }: RaffleComponentInterface) {
 
       <CountdownTimer targetDate={String(raffle.date)} />
 
-      <Image src={raffle.imageUrl} padding={['0', '0', '0', '2rem 10rem', '2rem 10rem']} w='100%'
+      <Image src={raffle.image_url} padding={['0', '0', '0', '2rem 10rem', '2rem 10rem']} w='100%'
         height={['17rem', '17rem', '35rem', '35rem', '35rem']} objectFit='contain' />
       {difference > 0 && <Flex direction='column'>
 

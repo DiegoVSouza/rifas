@@ -7,8 +7,8 @@ interface ShopCarContextProps {
     onAddNumber: (productShopCar: Numbers) => void;
     onChangeShopCarProduct: (id: string, quantity: number) => void;
     onRemoveProduct: (id: string) => void;
-    handleSetRaffleId: (id: string) => void;
-    raffleId: string;
+    handleSetraffle_id: (id: string) => void;
+    raffle_id: string;
     ShopCar: ShopCar
 }
 
@@ -19,8 +19,8 @@ interface Props {
 const ShopCarContext = createContext({} as ShopCarContextProps);
 
 function ShopCarProvider({ children }: Props) {
-    const [raffleId, setRaffleId] = useState(() => {
-        let shopLocal = localStorage.getItem('@raffleId')
+    const [raffle_id, setraffle_id] = useState(() => {
+        let shopLocal = localStorage.getItem('@raffle_id')
         if (shopLocal) {
             return JSON.parse(shopLocal)
         }
@@ -36,16 +36,16 @@ function ShopCarProvider({ children }: Props) {
 
     function onAddNumber(number: Numbers) {
         if (ShopCar) {
-            let numbers = ShopCar.numbers
+            let numbers = ShopCar.quotas
             let newProducts = [...numbers]
             newProducts.push(number)
-            ShopCar.numbers = newProducts
+            ShopCar.quotas = newProducts
             localStorage.setItem("@shopCar", JSON.stringify(ShopCar))
             setShopCar(ShopCar);
         } else {
             let newNumbers = []
             newNumbers.push(number)
-            let shopcar = { numbers: newNumbers }
+            let shopcar = { quotas: newNumbers }
             localStorage.setItem("@shopCar", JSON.stringify(shopcar))
             setShopCar(shopcar);
         }
@@ -53,12 +53,12 @@ function ShopCarProvider({ children }: Props) {
 
     function onChangeShopCarProduct(id: string, quantity: number) {
         if (ShopCar) {
-            let numbers = ShopCar.numbers
+            let numbers = ShopCar.quotas
             numbers.map(item => {
                 if (item.id === id)
                     onRemoveProduct(id)
             })
-            ShopCar.numbers = numbers
+            ShopCar.quotas = numbers
             localStorage.setItem("@shopCar", JSON.stringify(ShopCar))
             setShopCar(ShopCar);
         }
@@ -66,16 +66,16 @@ function ShopCarProvider({ children }: Props) {
 
     function onRemoveProduct(id: string) {
         if (ShopCar) {
-            let newNumbers = ShopCar.numbers.filter(item => item.id !== id)
-            let newShopCar = { numbers: newNumbers }
+            let newNumbers = ShopCar.quotas.filter(item => item.id !== id)
+            let newShopCar = { quotas: newNumbers }
             localStorage.setItem("@shopCar", JSON.stringify(newShopCar))
             setShopCar(newShopCar)
         }
     }
 
-    function handleSetRaffleId(id:string){
-        localStorage.setItem("@raffleId", JSON.stringify(id))
-        setRaffleId(id)
+    function handleSetraffle_id(id:string){
+        localStorage.setItem("@raffle_id", JSON.stringify(id))
+        setraffle_id(id)
     }
 
     return (
@@ -83,8 +83,8 @@ function ShopCarProvider({ children }: Props) {
             onAddNumber,
             onChangeShopCarProduct,
             onRemoveProduct,
-            handleSetRaffleId,
-            raffleId,
+            handleSetraffle_id,
+            raffle_id,
             ShopCar
         }}>
             {children}

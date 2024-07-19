@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Raffle } from '../../../Domain/Model/Raffle';
-import './RaffleCard.css'
 import {
     Box, Flex, Text, Image, Button,
     Modal,
@@ -19,7 +18,7 @@ import { LuArrowLeftRight } from "react-icons/lu";
 import { FaRegHeart } from "react-icons/fa6";
 import formatCurrency from '../../../utils/FormatCurrency';
 import TruncatedText from '../Inputs/TruncatedText';
-import RaffleModel from '../../../main/models/RafflesModel';
+import { RaffleModel } from '../../../main/hooks/useRaffleModel';
 import { useShopCar } from '../../../main/hooks/useShopCar';
 import RaffleButton from '../Inputs/RaffleButton';
 import dayjs from 'dayjs';
@@ -31,6 +30,9 @@ import { UserSchema } from '../../../Domain/Model/User';
 import SelectCity from '../City/SelectCity';
 import UserModel from '../../../main/models/UserModel';
 import Notification from '../Notification/Notification';
+import { formatCPF } from '../../../utils/CPF';
+import { formatPhone } from '../../../utils/Phone';
+import { justNumbers } from '../../../utils/Number';
 
 interface UserFormInterface {
     isOpen: boolean;
@@ -63,7 +65,9 @@ export default function UserForm({ isOpen, onClose }: UserFormInterface) {
         resolver: yupResolver(userSchema),
     });
 
-    const submitNumbers = (data: UserSchema) => {
+    const submitUser = (data: UserSchema) => {
+        data.cpf = justNumbers(data.cpf)
+        data.phone = justNumbers(data.phone)
         let user = { ...data, city: city }
 
         postUsers(user).then(() => {
@@ -72,6 +76,17 @@ export default function UserForm({ isOpen, onClose }: UserFormInterface) {
             Notification.error("Erro ao criar usuario")
         })
     }
+    const cpf = watch('cpf')
+    const phone = watch('phone')
+    useEffect(() => {
+        if (cpf && cpf.length > 10)
+          setValue('cpf', formatCPF(cpf))
+      }, [cpf])
+    
+      useEffect(() => {
+        if (phone && phone.length > 8)
+          setValue('phone', formatPhone(phone))
+      }, [phone])
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -80,7 +95,7 @@ export default function UserForm({ isOpen, onClose }: UserFormInterface) {
                 <ModalHeader>Cadastro de Usuario</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                    <form id='submitnumbers' onSubmit={handleSubmit(submitNumbers)}>
+                    <form id='submituser' onSubmit={handleSubmit(submitUser)}>
                         <InputComponent labelName="Nome" inputName="name" register={register} errors={errors} />
                         <InputComponent maxLength={14} labelName="CPF" inputName="cpf" register={register} errors={errors} />
                         <InputComponent maxLength={15} labelName="Telefone" inputName="phone" register={register} errors={errors} />
@@ -90,7 +105,7 @@ export default function UserForm({ isOpen, onClose }: UserFormInterface) {
                 </ModalBody>
 
                 <ModalFooter>
-                    <ButtonComponent form='submitnumbers' disabled={city === ''} width='100%' labelName='Comprar' full={false} type='submit' />
+                    <ButtonComponent form='submituser' disabled={city === ''} width='100%' labelName='Cadastrar' full={false} type='submit' />
                 </ModalFooter>
             </ModalContent>
         </Modal>

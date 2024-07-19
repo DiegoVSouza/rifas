@@ -125,7 +125,7 @@
 //                 email: 'newAdmin@gmail.com',
 //                 name: "John Doe",
 //                 password: "password",
-//                 roleId: "1"
+//                 role_id: "1"
 //             });
 //         });
 //         wait().then(() => {
